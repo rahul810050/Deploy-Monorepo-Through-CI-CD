@@ -10,7 +10,7 @@ app.use("/api/v1", router);
 
 function startServer() {
   try{
-		app.listen(3000, () => {
+		app.listen(3001, () => {
 			console.log("Server is running on port 3000");
 		});
 	} catch (error) {
