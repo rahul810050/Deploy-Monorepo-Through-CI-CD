@@ -1,0 +1,32 @@
+name: Deploy to staging
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  redeploy_everything:
+    name: Deploy everything to the staging cluster
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Set up SSH key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh_key
+          chmod 600 ssh_key
+
+      - name: SSH and deploy
+        run: |
+          ssh -i ssh_key -o StrictHostKeyChecking=no rahul@34.93.139.231 << 'EOF'
+            cd ~/Deploy-Monorepo-Through-CI-CD
+            git pull origin main
+            pnpm install
+            pnpm run build
+            pm2 restart http
+            pm2 restart ws
+            pm2 restart fe
+          EOF
