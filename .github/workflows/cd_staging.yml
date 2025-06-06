@@ -25,6 +25,7 @@ jobs:
             sudo npm install -g pnpm &&
             pnpm install &&
             pnpm run build &&
+            pnpm run build -- --update-env &&
             pm2 restart fe-sever &&
             pm2 restart http-sever &&
             pm2 restart ws-sever
