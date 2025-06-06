@@ -4,15 +4,26 @@ on:
     branches: [ main ]
 
 jobs:
-  redeploy_everything:
+  deploy:
     runs-on: ubuntu-latest
-    name: Deploying everything to the staging cluster
     steps:
-      - run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
-          mkdir -p /home/runner/.ssh
-          ls /home/runner/.ssh
-          touch /home/runner/.ssh/known_hosts
-          echo "${{ secrets.KNOWN_HOST }}" &> /home/runner/.ssh/known_hosts
-          chmod 700 /home/runner/ssh_key
-          ssh -i ~/ssh_key rahul@34.93.139.231 -t "cd Deploy-Monorepo-Through-CI-CD/ && git pull origin main && export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games && npm install -g pnpm && pnpm install && pnpm run build && pm2 restart fe-sever && pm2 restart http-sever && pm2 restart ws-sever"
+      - name: Set up SSH key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
+          chmod 600 ~/ssh_key
+          mkdir -p ~/.ssh
+          echo "${{ secrets.KNOWN_HOST }}" > ~/.ssh/known_hosts
+
+      - name: SSH and deploy
+        run: |
+          ssh -i ~/ssh_key rahul@34.93.139.231 "
+            cd Deploy-Monorepo-Through-CI-CD/ &&
+            git pull origin main &&
+            export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games &&
+            npm install -g pnpm &&
+            pnpm install &&
+            pnpm run build &&
+            pm2 restart fe-sever &&
+            pm2 restart http-sever &&
+            pm2 restart ws-sever
+          "
