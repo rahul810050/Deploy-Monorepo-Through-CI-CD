@@ -12,7 +12,8 @@
     "dev": "tsc -b --watch",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev",
-    "studio": "prisma studio"
+    "studio": "prisma studio",
+    "turbo-build": "turbo run build -- --update-env"
   },
   "keywords": [],
   "author": "",
