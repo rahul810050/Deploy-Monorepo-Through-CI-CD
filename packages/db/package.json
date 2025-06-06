@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc -b",
-    "dev": "tsc -b --watch",
+    "dev": "tsc -b",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev",
     "studio": "prisma studio",

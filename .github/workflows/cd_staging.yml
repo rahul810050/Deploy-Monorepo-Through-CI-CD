@@ -14,19 +14,22 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.KNOWN_HOST }}" > ~/.ssh/known_hosts
 
-      - name: SSH and deploy
-        run: |
-          ssh -i ~/ssh_key rahul@34.93.139.231 -t "
-            cd Deploy-Monorepo-Through-CI-CD &&
-            git config --global --add safe.directory /home/rahul/Deploy-Monorepo-Through-CI-CD &&
-            git stash --include-untracked &&
-            git pull origin main &&
-            export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games &&
-            sudo npm install -g pnpm &&
-            pnpm install &&
-            pnpm run build &&
-            pnpm exec turbo run build --force -- --update-env &&
-            pm2 restart fe-sever &&
-            pm2 restart http-sever &&
-            pm2 restart ws-sever
-          "
+          - name: SSH and deploy
+          run: |
+            ssh -i ~/ssh_key rahul@34.93.139.231 -t "
+              cd Deploy-Monorepo-Through-CI-CD &&
+              git config --global --add safe.directory /home/rahul/Deploy-Monorepo-Through-CI-CD &&
+              git stash --include-untracked &&
+              git pull origin main &&
+              export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games &&
+              sudo npm install -g pnpm &&
+              pnpm install &&
+              # Run build without --update-env in individual package scripts
+              pnpm run build &&
+              # Run turbo with update-env to update environment variables and force build
+              pnpm exec turbo run build --force -- --update-env &&
+              pm2 restart fe-sever &&
+              pm2 restart http-sever &&
+              pm2 restart ws-sever
+            "
+        
