@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc -b",
     "dev": "tsc -b && node dist/index.js",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "turbo-build": "turbo run build --update-env"
   },
   "turbo": {
     "outputs": ["dist/**"]
