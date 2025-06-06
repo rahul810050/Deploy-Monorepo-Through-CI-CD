@@ -22,7 +22,7 @@ jobs:
             git stash --include-untracked &&
             git pull origin main &&
             export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games &&
-            npm install -g pnpm &&
+            sudo npm install -g pnpm &&
             pnpm install &&
             pnpm run build &&
             pm2 restart fe-sever &&
