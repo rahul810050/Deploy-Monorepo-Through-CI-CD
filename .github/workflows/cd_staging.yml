@@ -19,8 +19,8 @@ jobs:
 
       - name: Connect and deploy to staging server
         run: |
-          ssh -i ~/ssh_key -o StrictHostKeyChecking=no root@34.93.139.231 << 'EOF'
-            cd week-25-ci-next-app/
+          ssh -i ~/ssh_key -o StrictHostKeyChecking=no rahul@34.93.139.231 << 'EOF'
+            cd Deploy-Monorepo-Through-CI-CD/
             git pull origin main
             export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
             npm install -g pnpm
