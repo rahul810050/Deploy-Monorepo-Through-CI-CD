@@ -15,7 +15,7 @@ jobs:
           echo "${{ secrets.KNOWN_HOST }}" > ~/.ssh/known_hosts
 
           - name: SSH and deploy
-          run: |
+            run: |
             ssh -i ~/ssh_key rahul@34.93.139.231 -t "
               cd Deploy-Monorepo-Through-CI-CD &&
               git config --global --add safe.directory /home/rahul/Deploy-Monorepo-Through-CI-CD &&
