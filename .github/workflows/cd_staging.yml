@@ -16,14 +16,15 @@ jobs:
 
       - name: SSH and deploy
         run: |
-          ssh -i ~/ssh_key rahul@34.93.139.231 "
-            cd Deploy-Monorepo-Through-CI-CD/ &&
-            git pull origin main &&
-            export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games &&
-            npm install -g pnpm &&
-            pnpm install &&
-            pnpm run build &&
-            pm2 restart fe-sever &&
-            pm2 restart http-sever &&
+          ssh -i ~/ssh_key rahul@34.93.139.231 -o StrictHostKeyChecking=no -t "
+            git config --global --add safe.directory /home/rahul/Deploy-Monorepo-Through-CI-CD && \
+            cd /home/rahul/Deploy-Monorepo-Through-CI-CD && \
+            git pull origin main && \
+            export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games && \
+            npm install -g pnpm && \
+            pnpm install && \
+            pnpm run build && \
+            pm2 restart fe-sever && \
+            pm2 restart http-sever && \
             pm2 restart ws-sever
           "
