@@ -16,7 +16,7 @@ jobs:
           touch /home/runner/.ssh/known_hosts
           echo "${{ secrets.KNOWN_HOST }}" > /home/runner/.ssh/known_hosts
 
-          ssh -i ~/ssh_key rahul@34.93.139.231 -t "
+          ssh -i ~/ssh_key cocane@34.93.20.226 -t "
             cd Deploy-Monorepo-Through-CI-CD &&
             git config --global --add safe.directory /home/rahul/Deploy-Monorepo-Through-CI-CD &&
             git stash --include-untracked &&
